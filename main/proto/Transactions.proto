@@ -1,0 +1,42 @@
+syntax = "proto3";
+package protos;
+
+option java_outer_classname = "TransactionsProto";
+
+message Transaction {
+    int32 fromId = 1;
+    int32 toId = 2;
+    string fromName = 3;
+    string toName = 4;
+    double amount = 5;
+}
+
+message Reply {
+    string serverAddress = 1;
+}
+
+message Leader {
+    string leaderAddress = 1;
+}
+
+message blockID{
+    int32 blockID = 1;
+}
+
+message maxBlockSeq{
+    string blockSeq = 1;
+}
+
+message Block{
+    repeated Transaction v = 1;
+    int32 blockID = 2;
+    string serverAddress = 3;
+
+}
+
+service Transactions {
+    rpc SendTransaction (Transaction) returns (Reply) {}
+    rpc AddReceivedBlock (Block) returns (Reply) {}
+    rpc GetBlockSeq(maxBlockSeq) returns (maxBlockSeq) {}
+
+}
